@@ -1,0 +1,27 @@
+<h2>Контакты:</h2>
+<script>
+  function getInner() {
+    alert(0);
+    var mailChoose = document.getElementById('check').value;
+    alert(mailChoose);
+    var mailValue = document.getElementById(mailChoose).value;
+    alert(mailValue);
+    var hid = document.getElementById('mail');
+    alert(hid);
+    hid.innerHTML = mailValue;
+  }
+</script>
+
+
+<form action="/contacts" method="post">
+<% i = 0  %>
+<% while (line = @myFile.gets) %>
+    <p><%= i+= 1 %>)
+    <%= line %><input type="radio" id="click" name="check" value="<% i %>"> - <%= i %> </p>
+<% end %>
+<% @myFile.close %>
+
+  <input type="text" name="mail" id="mail" value=""/>
+
+  <input type="button" class="btn btn-default" value="Отправить сообщение на почту" onclick="getInner();" />
+</form>
