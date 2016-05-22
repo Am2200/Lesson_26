@@ -5,8 +5,8 @@ require 'sinatra/reloader'
 require 'sqlite3'
 
 configure do
-  @db = SQLite3::Database.new 'barbershop.db'
-  @db.execute 'CREATE TABLE IF NOT EXISTS USERS
+  db = get_db
+  db.execute 'CREATE TABLE IF NOT EXISTS Users
               (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT,
@@ -42,6 +42,7 @@ post '/visit' do
   @dateTime = params[:date_time]
   @email    = params[:email]
   @barber   = params[:barber]
+  @color    = params[:color]
 
   hh = {
       :username   => 'Please, enter your name',
@@ -56,16 +57,9 @@ post '/visit' do
     return erb :visit
   end
 
-  #hh.each do |key,value|
-   # if params[key] == ''
-    #  @error = value
-     # return erb :visit
-    #end
-  #end
+  db = get_db
+  db.execute 'INSERT INTO Users (username, phone, datestamp, barber, color) VALUES (?,?,?,?,?)', [@username, @phone, @dateTime, @barber, @color]
 
-  myFile = File.open './public/contacts.txt', 'a'
-  myFile.write "User: <i>#{params[:username]}</i>, Phone: <i>#{params[:phone]}</i>, Email: <i>#{params[:email]}</i>, Date: <i>#{params[:date_time]}</i>, The hairdresser: <i>#{params[:barber]}</i> , color: <i>#{params[:color]}</i>\n"
-  myFile.close
 
   erb '<h4>You are registered! We will call you later!</h4>'
 end
@@ -75,3 +69,6 @@ post '/contacts' do
 end
 
 
+def get_db
+  return SQLite3::Database.new 'barbershop.db'
+end
