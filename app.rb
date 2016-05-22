@@ -3,8 +3,6 @@ require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
 
-@@allFilesCheck = 1
-
 get '/' do
 	erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"
 end
@@ -29,6 +27,7 @@ post '/visit' do
   @phone    = params[:phone]
   @dateTime = params[:date_time]
   @email    = params[:email]
+  @barber   = params[:barber]
 
   hh = {
       :username   => 'Please, enter your name',
@@ -51,9 +50,9 @@ post '/visit' do
   #end
 
   myFile = File.open './public/contacts.txt', 'a'
-  myFile.write "User: <i>#{params[:username]}</i>, Phone: <i>#{params[:phone]}</i>, Email: <i id = '#{@@allFilesCheck}'>#{params[:email]}</i>, Date: <i>#{params[:date_time]}</i>, The hairdresser: <i>#{params[:hair]}</i> , color: <i>#{params[:color]}</i>\n"
+  myFile.write "User: <i>#{params[:username]}</i>, Phone: <i>#{params[:phone]}</i>, Email: <i>#{params[:email]}</i>, Date: <i>#{params[:date_time]}</i>, The hairdresser: <i>#{params[:barber]}</i> , color: <i>#{params[:color]}</i>\n"
   myFile.close
-  @@allFilesCheck += 1
+
   erb '<h4>You are registered! We will call you later!</h4>'
 end
 
