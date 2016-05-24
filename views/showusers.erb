@@ -5,10 +5,14 @@
   </head>
 
   <body>
-    <div>
+    <table class="table">
       <% @row.size.times do |i| %>
-       <p><%= @row[i] %></p>
+       <tr>
+         <% @row.size.times do |j| %>
+         <td><%= @row[i][j] %></td>
+             <% end %>
+       </tr>
       <% end %>
-    </div>
+    </table>
   </body>
 </html>

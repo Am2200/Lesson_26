@@ -28,7 +28,6 @@ configure do
      end
 end
 
-
 get '/' do
 	erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"
 end
@@ -49,7 +48,7 @@ end
 
 get '/showusers' do
   db = get_db
-  @row = db.execute 'SELECT * FROM Users'
+  @row = db.execute 'SELECT * FROM Users ORDER BY id desc'
   erb :showusers
 end
 
