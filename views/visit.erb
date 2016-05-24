@@ -14,7 +14,6 @@
 </script>
 
 
-
 <form action="/visit" method="post" role="form">
   <div class="form-group">
     <label for="exampleInputEmail1">Ваше имя</label>
@@ -38,11 +37,13 @@
 
   <div class="form-group">
     <label>Ваш парикмахер:</label>
-  <select name="barber" class="form-control" >
-    <option <%= @barber == 'Walter White' ? 'selected' : '' %>>Walter White</option>
-    <option <%= @barber == 'Jessie Pinkman' ? 'selected' : '' %>>Jessie Pinkman</option>
-    <option <%= @barber == 'Gus Fring' ? 'selected' : '' %>>Gus Fring</option>
-  </select>
+    <select name="barber" class="form-control" >
+    <% db = SQLite3::Database.new './barbershop.db' %>
+    <% row = db.execute 'SELECT name FROM Barbers' %>
+    <% row.size.times do |i| %>
+      <option <%= @barber == row[i] ? 'selected' : '' %>><%= row[i].join ('') %></option>
+    <% end %>
+    </select>
   </div>
 
   <div class="form-group">

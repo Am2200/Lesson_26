@@ -15,11 +15,19 @@ configure do
                 barber TEXT,
                 color TEXT
               )'
+   if !db.execute 'CREATE TABLE IF NOT EXISTS Barbers
+              (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT
+              )'
+      mas = ['Walter White', 'Jessie Pinkman', 'Gus Fring']
+      mas.length.times do |i|
+        db.execute 'INSERT INTO Barbers (name) VALUES (?)', [mas[i]]
+      end
+
+     end
 end
 
-get '/showusers' do
-  
-end
 
 get '/' do
 	erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"
@@ -37,6 +45,12 @@ end
 get '/contacts' do
   @myFile = File.open './public/contacts.txt', 'r'
   erb :contacts
+end
+
+get '/showusers' do
+  db = get_db
+  @row = db.execute 'SELECT * FROM Users'
+  erb :showusers
 end
 
 post '/visit' do
