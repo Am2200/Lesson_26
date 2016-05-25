@@ -20,12 +20,17 @@ configure do
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT
               )'
-      mas = ['Walter White', 'Jessie Pinkman', 'Gus Fring']
+      mas = ['Walter White', 'Jessie Pinkman', 'Gus Fring', 'Mike Ehrmantraut']
       mas.length.times do |i|
         db.execute 'INSERT INTO Barbers (name) VALUES (?)', [mas[i]]
       end
 
      end
+end
+
+before do
+  db = get_db
+  @barbers = db.execute 'select * from Barbers'
 end
 
 get '/' do
@@ -69,7 +74,7 @@ post '/visit' do
   }
 
   @error = hh.select {|key,_| params[key] == ''}.values.join(', ')
-
+  p @barber
   if @error != ''
     return erb :visit
   end

@@ -6,9 +6,19 @@
 
   <body>
     <table class="table">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>DateStamp</th>
+        <th>Barber</th>
+        <th>Color</th>
+      </tr>
+      </thead>
       <% @row.size.times do |i| %>
        <tr>
-         <% @row.size.times do |j| %>
+         <% @row[i].size.times do |j| %>
          <td><%= @row[i][j] %></td>
              <% end %>
        </tr>
